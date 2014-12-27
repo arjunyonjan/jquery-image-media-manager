@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Media Manager - developing for laravel</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Add New Product</h2>
+
+                <form action="">
+                    <div class="form-group">
+                        <label for="">Title</label>
+                        <input type="text" class="form-control input-sm" name="">
+                    </div>
+
+					<div class="form-group">
+						<label for="">Images</label>
+						<div class="product-images">
+							<!-- product images and hidden fields -->
+						</div>
+					</div><!-- end .form-group -->
+
+					<div class="clearfix"></div>
+
+					<button type="button" data-toggle="modal" data-target="#media-modal" class="btn btn-sm btn-danger">
+						Upload Images
+					</button>
+
+                </form>
+            </div><!-- end .col-sm-6 -->
+
+			<!-- media modal -->
+			<div id="media-modal" class="modal fade">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button class="close" data-dismiss="modal">&times;</button>
+							<h4>Media Manager</h4>
+						</div>
+
+						<div class="modal-body">
+							<!-- nav tabs -->
+							<ul class="nav nav-tabs" id="myTabs">
+								<li class="active"><a href="#upload" data-toggle="tab">Upload</a></li>
+								<li><a href="#librayr" data-toggle="tab">Library</a></li>
+							</ul>
+
+							<!-- tab panes -->
+							<div class="tab-content">
+								<div class="tab-pane active fade in" id="upload">
+									<button class="btn btn-info">Add Files</button>
+								</div>
+
+								<div class="tab-pane fade" id="librayr">
+									<a href="#" data-image-id="1">
+										<img src="images/camera.jpg" alt="">
+										<input type="checkbox" name="images-check">
+									</a>
+
+									<a href="#" data-image-id="2">
+										<img src="images/graphic-card.jpg" alt="">
+										<input type="checkbox" name="images-check">
+									</a>
+
+									<a href="#" data-image-id="3">
+										<img src="images/laptop.jpg" alt="">
+										<input type="checkbox" name="images-check">
+									</a>
+
+									<a href="#" data-image-id="4">
+										<img src="images/motherboard.jpg" alt="">
+										<input type="checkbox" name="images-check">
+									</a>
+
+									<div class="clearfix"></div>
+									<button type="button" class="btn btn-sm btn-info insert">Insert</button>
+								</div><!-- end .library -->
+							</div><!-- end tab-content -->
+						</div>
+					</div><!-- end .modal-content -->
+				</div><!-- end .modal-dialog -->
+			</div><!-- end .modal -->
+        </div><!-- end .row -->
+    </div><!-- end .container -->
+
+    <script>
+    	var mediaModal = $('#media-modal'),
+    	library = $('#librayr'),
+    	productImagesContainer = $('.product-images');
+
+    	library.on('click','a',function(e){
+    		e.preventDefault();
+    		var checkbox = $(this).find('input[type=checkbox]');
+
+    		if(!checkbox.is(':checked')){
+    			checkbox.prop('checked', true);
+    		}else{
+    			checkbox.prop('checked', false);
+    		}
+    	});
+
+    	$('.insert').click(function(e){
+    		var checkboxes = library.find('input[type=checkbox]');
+    		checkboxes.each(function(i, el){
+    			if(el.checked){
+    				var imageId = $(el).parent().data('image-id');
+    				var imgSrc = $(el).siblings('img').attr('src');
+    				var template = 	'<div class="product-img">'+
+    									'<input type="hidden" name="image-ids[]" value="'+ imageId +'">'+
+    									'<img src="'+ imgSrc +'" />'+
+    									'<a href="#" class="btn btn-xs btn-danger remove">'+
+										'<span class="glyphicon glyphicon-remove-sign"></span></a>'+
+    								'</div>';
+
+    				productImagesContainer.append(template);
+    			}
+    		});
+    		mediaModal.modal('hide');
+    	});
+
+    	productImagesContainer.on('click', '.remove', function(e){
+    		e.preventDefault();
+    		$(this).parent('.product-img').fadeOut('100', function(){
+    			$(this).remove();
+    		});
+    	});
+    </script>
+</body>
+</html>

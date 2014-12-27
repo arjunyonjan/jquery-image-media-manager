@@ -1,0 +1,36 @@
+#librayr a{
+	float:left;
+	position:relative;
+	border: 1px solid #e7e7e7;
+}
+
+.product-img{
+	float:left;
+	position:relative;
+	border: 1px solid #e9e9e9;
+	margin-right: 10px;
+}
+
+.product-img .btn{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
+#librayr img{
+	width: 100px;
+}
+
+#librayr input{
+	position:absolute;
+	right: 0;
+	bottom: 0;
+}
+
+#librayr a:hover{
+	border: 1px solid red;
+}
+
+.product-images img{
+	width: 100px;
+}
